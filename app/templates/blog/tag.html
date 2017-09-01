@@ -1,0 +1,8 @@
+{% extends 'blog/layout.html' %}
+
+{% block title %}Zoznam príspevkov označených „{{ tag.title }}“{% endblock %}
+
+{% block body %}
+  <h1>{{ self.title() }}</h1>
+  {% include 'blog/article_list.html' with context %}
+{% endblock %}

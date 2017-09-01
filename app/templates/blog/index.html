@@ -1,0 +1,8 @@
+{% extends 'blog/layout.html' %}
+
+{% block title %}Weblog{% endblock %}
+
+{% block body %}
+  <h1>Zoznam príspevkov</h1>
+  {% include 'blog/article_list.html' with context %}
+{% endblock %}

@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+<channel>
+    <title>Jakub Kucharovic weblog</title>
+    <atom:link href="{{ url_for('blog.rss', _external=True) }}" rel="self" type="application/rss+xml" />
+    <link>{{ url_for('blog.index', _external=True) }}</link>
+    <description><![CDATA[Vývoj webových aplikácií…]]></description>
+    <lastBuildDate>{{ (posts|first).published_at.strftime('%a, %d %b %Y %H:%M:%S %z') }}</lastBuildDate>
+    <language>sk</language>
+    {% for post in posts %}
+    <item>
+        <title>
+            {{ post.title }}
+        </title>
+        <link>
+            {{ url_for('blog.show', slug=post.slug, _external=True) }}
+        </link>
+        <guid isPermaLink="false">
+            {{ url_for('blog.short_link', id=post.id, _external=True) }}
+        </guid>
+        <pubDate>
+            {{ post.published_at.strftime('%a, %d %b %Y %H:%M:%S %z') }}
+        </pubDate>
+        {% for tag in post.tags %}
+        <category>
+            {{ tag }}
+        </category>
+        {% endfor %}
+        <description>
+            <![CDATA[{{ post.description }}]]>
+        </description>
+        </item>
+    {% endfor %}
+    </channel>
+</rss>

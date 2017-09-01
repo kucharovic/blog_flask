@@ -1,0 +1,31 @@
+<div class="article-list">
+    {% for post in posts %}
+    <article itemprop="blogPost" itemscope itemtype="http://schema.org/BlogPosting">
+      <header>
+        <h2 itemprop="name headline">
+          <a href="{{ url_for('blog.show', slug=post.slug) }}">{{ post.title }}</a>
+        </h2>
+        <p>
+            <time pubdate datetime="{{ post.published_at.isoformat() }}" itemprop="datePublished" title="Zverejnené {{ post.published_at.strftime("%a, %d %b %Y %H:%M:%S") }}">{{ post.published_at.strftime("%a, %d %b %Y %H:%M:%S") }}</time>,
+            {% if post.modified_at %}
+            <time pubdate datetime="{{ post.modified_at.isoformat() }}" itemprop="dateModified" title="Naposledy upravené {{ post.modified_at.strftime("%a, %d %b %Y %H:%M:%S") }}">{{ post.modified_at.strftime("%a, %d %b %Y %H:%M:%S") }}</time>,
+            {% endif %}
+            <b>Štítky</b>:
+            {% for tag in post.tags %}
+                <a href="{{ url_for('blog.tag', slug=tag.slug) }}">{{ tag }}</a>{% if false == loop.last %}, {% endif %}
+            {% endfor %}
+          </p>
+        <meta itemprop="description" content="{{ post.description }}">
+      </header>
+      <div class="content">
+        {{ post.perex|safe }}
+      </div>
+      <p>
+        <a itemprop="url" href="{{ url_for('blog.show', slug=post.slug) }}">Celý článok &rarr;</a>
+      </p>
+      </article>
+      {% if loop.last is sameas false %}<hr>{% endif %}
+      {% else %}
+        <p>Žiaden príspevok.</p>
+    {% endfor %}
+  </div>
